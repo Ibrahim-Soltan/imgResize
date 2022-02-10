@@ -1,0 +1,19 @@
+{
+  "name": "imgresize",
+  "version": "1.0.0",
+  "description": "An image resizing API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ibrahim-Soltan/imgResize.git"
+  },
+  "author": "Ibrahim Soltan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ibrahim-Soltan/imgResize/issues"
+  },
+  "homepage": "https://github.com/Ibrahim-Soltan/imgResize#readme"
+}
