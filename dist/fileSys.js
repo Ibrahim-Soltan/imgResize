@@ -36,8 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filenameSplit = exports.buildCacheDir = void 0;
+exports.doResize = exports.filenameSplit = exports.buildCacheDir = void 0;
 var fs_1 = require("fs");
+var sharp = require("sharp");
 function buildCacheDir() {
     return __awaiter(this, void 0, void 0, function () {
         var err_1;
@@ -109,9 +110,31 @@ function filenameSplit(file) {
     var filenameWidthHeight = file.split(".")[0];
     var extension = file.split(".")[1];
     var filename = filenameWidthHeight.split("-")[0];
+    if (filenameWidthHeight.split("-").length == 1) {
+        return { filename: filename, extension: extension };
+    }
     var widthHeight = filenameWidthHeight.split("-")[1];
     var width = widthHeight.split("X")[0];
     var height = widthHeight.split("X")[1];
-    return [filename, width, height, extension];
+    return { filename: filename, width: width, height: height, extension: extension };
 }
 exports.filenameSplit = filenameSplit;
+var doResize = function (filename, height, width) { return __awaiter(void 0, void 0, void 0, function () {
+    var image, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, sharp("src/imgs/".concat(filename)).resize(width, height).toFile("src/cache/")];
+            case 1:
+                image = _a.sent();
+                return [3 /*break*/, 3];
+            case 2:
+                err_4 = _a.sent();
+                console.log(err_4);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.doResize = doResize;

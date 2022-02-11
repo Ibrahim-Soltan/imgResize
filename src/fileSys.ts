@@ -1,4 +1,5 @@
 import {promises as fsPromises} from "fs";
+
 async function buildCacheDir(){
     try{
         if(!(await isCacheDirCreated())){
@@ -29,15 +30,20 @@ async function readFileSys(){
         console.error(err);
       }
 }
-function filenameSplit(file:string):string[]{
+
+function filenameSplit(file:string):{filename:string,width?:string,height?:string,extension:string}{
     const filenameWidthHeight = file.split(".")[0];
     const extension = file.split(".")[1];
     const filename = filenameWidthHeight.split("-")[0];
+    if(filenameWidthHeight.split("-").length == 1){
+        return {filename,extension};
+    }
     const widthHeight = filenameWidthHeight.split("-")[1];
     const width = widthHeight.split("X")[0];
     const height= widthHeight.split("X")[1];
-    return [filename,width,height,extension];
+    return {filename,width,height,extension};
 }
+
 
 
 
