@@ -1,3 +1,5 @@
 "use strict";
-var hi = 'hi';
-console.log('Hello World!');
+var remSeven = function (num) {
+    return num % 7;
+};
+console.log(remSeven(8));

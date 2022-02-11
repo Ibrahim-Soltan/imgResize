@@ -1,2 +1,3 @@
-let hi:string = 'hi';
-console.log('Hello World!');
+const remSeven = (num:number)=>{
+    return num%7;
+}
