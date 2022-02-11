@@ -29,8 +29,19 @@ async function readFileSys(){
         console.error(err);
       }
 }
+function filenameSplit(file:string):string[]{
+    const filenameWidthHeight = file.split(".")[0];
+    const extension = file.split(".")[1];
+    const filename = filenameWidthHeight.split("-")[0];
+    const widthHeight = filenameWidthHeight.split("-")[1];
+    const width = widthHeight.split("X")[0];
+    const height= widthHeight.split("X")[1];
+    return [filename,width,height,extension];
+}
 
 
 
-
-export default buildCacheDir;
+export {
+    buildCacheDir,
+    filenameSplit
+};

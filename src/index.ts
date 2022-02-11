@@ -1,5 +1,5 @@
 import express from "express";
-import buildCacheDir from "./fileSysFactory";
+import {buildCacheDir,filenameSplit} from "./fileSys";
 const app = express();
 const port = 3000;
 
