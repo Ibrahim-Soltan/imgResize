@@ -48,10 +48,13 @@ function filenameSplit(file:string):{filename:string,width?:string,height?:strin
     return {filename,width,height,extension};
 }
 
-const doResize = async (filename:string,height:number,width:number):Promise<void>=>{
+const doResize = async (filename:string,width:number,height:number):Promise<unknown>=>{
 
     try{
-        const image = await sharp(`src/imgs/${filename}`).resize(width,height).toFile("src/cache/")
+        const data = filenameSplit(filename);
+        const targetPath = `src/cache/${data.filename}-${width}X${height}.${data.extension}`;
+        await sharp(`src/imgs/${filename}`).resize(width,height).toFile(targetPath);
+        return targetPath;
     }catch(err){
         console.log(err);
     }
