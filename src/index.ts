@@ -1,4 +1,9 @@
-const remSeven = (num:number)=>{
-    return num%7;
-}
-export default remSeven;
+import express from "express";
+
+const app = express();
+const port = 3000;
+
+
+app.listen(port,()=>{
+    console.log("Server listen to port "+port);
+});
