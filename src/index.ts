@@ -4,7 +4,10 @@ const app = express();
 const port = 3000;
 
 app.get("/",(req,res)=>{
-    res.send("Resizing Images...");
+    const height = req.query.height;
+    const width = req.query.width;
+    const filename = req.query.filename;
+    res.send(`Resizing image ${filename} to ${height}x${width}`);
 });
 
 app.listen(port,()=>{
