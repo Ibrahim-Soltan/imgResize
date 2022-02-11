@@ -1,5 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var remSeven = function (num) {
     return num % 7;
 };
-console.log(remSeven(8));
+exports.default = remSeven;
