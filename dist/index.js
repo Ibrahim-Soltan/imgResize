@@ -11,7 +11,7 @@ app.get("/", function (req, res) {
     var height = req.query.height;
     var width = req.query.width;
     var filename = req.query.filename;
-    res.send("Resizing image ".concat(filename, " to ").concat(height, "x").concat(width));
+    res.send("Resizing image ".concat(filename, " to ").concat(width, "x").concat(height));
 });
 app.listen(port, function () {
     console.log("Server listen to port " + port);

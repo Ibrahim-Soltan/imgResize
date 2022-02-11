@@ -1,5 +1,5 @@
 import {promises as fsPromises} from "fs";
-
+const sharp = require("sharp");
 async function buildCacheDir(){
     try{
         if(!(await isCacheDirCreated())){
@@ -22,13 +22,17 @@ async function isCacheDirCreated():Promise<boolean>{
     }
 }    
 
-async function readFileSys(){
+async function readDir(dir:string) {
     try {
-        const files = await fsPromises.readdir("src");
+        const files = await fsPromises.readdir(dir);
         return files;
       } catch (err) {
         console.error(err);
-      }
+      } 
+}
+
+async function readFileSys(){
+    return readDir("src");
 }
 
 function filenameSplit(file:string):{filename:string,width?:string,height?:string,extension:string}{
@@ -44,10 +48,19 @@ function filenameSplit(file:string):{filename:string,width?:string,height?:strin
     return {filename,width,height,extension};
 }
 
+const doResize = async (filename:string,height:number,width:number):Promise<void>=>{
 
+    try{
+        const image = await sharp(`src/imgs/${filename}`).resize(width,height).toFile("src/cache/")
+    }catch(err){
+        console.log(err);
+    }
+}
 
 
 export {
     buildCacheDir,
-    filenameSplit
+    filenameSplit,
+    doResize,
+    readDir
 };

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.doResize = exports.filenameSplit = exports.buildCacheDir = void 0;
+exports.readDir = exports.doResize = exports.filenameSplit = exports.buildCacheDir = void 0;
 var fs_1 = require("fs");
 var sharp = require("sharp");
 function buildCacheDir() {
@@ -86,14 +86,14 @@ function isCacheDirCreated() {
         });
     });
 }
-function readFileSys() {
+function readDir(dir) {
     return __awaiter(this, void 0, void 0, function () {
         var files, err_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fs_1.promises.readdir("src")];
+                    return [4 /*yield*/, fs_1.promises.readdir(dir)];
                 case 1:
                     files = _a.sent();
                     return [2 /*return*/, files];
@@ -103,6 +103,14 @@ function readFileSys() {
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
+        });
+    });
+}
+exports.readDir = readDir;
+function readFileSys() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, readDir("src")];
         });
     });
 }

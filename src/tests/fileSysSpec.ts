@@ -1,4 +1,4 @@
-import { filenameSplit } from "../fileSys";
+import { filenameSplit,readDir } from "../fileSys";
 describe("fileSys Functions:",()=>{
     describe("Function filenameSplit:",()=>{
         it("should split sea-100X100.png",()=>{
@@ -14,6 +14,11 @@ describe("fileSys Functions:",()=>{
                 filename:"sea",      
                 extension:"png"
             });
+        })
+    })
+    describe("Function readDir:",async()=>{
+        it("should return [encenadaport.jpg,fjord.jpg,icelandwaterfall.jpg,palmtunnel.jpg,santamonica.jpg] when imgs is passes",async ()=>{
+            expect((await readDir("src/imgs")) as unknown as string).toEqual(["encenadaport.jpg","fjord.jpg","icelandwaterfall.jpg","palmtunnel.jpg","santamonica.jpg"])
         })
     })
 })
