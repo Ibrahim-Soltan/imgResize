@@ -8,8 +8,7 @@ app.get("/",async(req,res)=>{
     const width = parseInt(req.query.width as string);
     const height = parseInt(req.query.height as string);
     const finalImg = await doResize(filename,width,height);
-    console.log(finalImg);
-    res.sendFile("D:/FWD Web Dev/Advanced/imgResize/src/cache/fjord-200X200.jpg");
+    res.sendFile(__dirname+finalImg);
 });
 
 app.listen(port,()=>{

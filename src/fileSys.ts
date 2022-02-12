@@ -54,7 +54,7 @@ const doResize = async (filename:string,width:number,height:number):Promise<unkn
         const data = filenameSplit(filename);
         const targetPath = `src/cache/${data.filename}-${width}X${height}.${data.extension}`;
         await sharp(`src/imgs/${filename}`).resize(width,height).toFile(targetPath);
-        return targetPath;
+        return `/cache/${data.filename}-${width}X${height}.${data.extension}`;
     }catch(err){
         console.log(err);
     }
