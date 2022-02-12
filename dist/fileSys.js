@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readDir = exports.doResize = exports.filenameSplit = exports.buildCacheDir = void 0;
+exports.previouslyProcessed = exports.readDir = exports.doResize = exports.filenameSplit = exports.buildCacheDir = void 0;
 var fs_1 = require("fs");
 var sharp = require("sharp");
 function buildCacheDir() {
@@ -127,16 +127,18 @@ function filenameSplit(file) {
     return { filename: filename, width: width, height: height, extension: extension };
 }
 exports.filenameSplit = filenameSplit;
-var doResize = function (filename, height, width) { return __awaiter(void 0, void 0, void 0, function () {
-    var image, err_4;
+var doResize = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, targetPath, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, sharp("src/imgs/".concat(filename)).resize(width, height).toFile("src/cache/")];
+                data = filenameSplit(filename);
+                targetPath = "src/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
+                return [4 /*yield*/, sharp("src/imgs/".concat(filename)).resize(width, height).toFile(targetPath)];
             case 1:
-                image = _a.sent();
-                return [3 /*break*/, 3];
+                _a.sent();
+                return [2 /*return*/, "/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
             case 2:
                 err_4 = _a.sent();
                 console.log(err_4);
@@ -146,3 +148,15 @@ var doResize = function (filename, height, width) { return __awaiter(void 0, voi
     });
 }); };
 exports.doResize = doResize;
+var previouslyProcessed = function (filename, width, height, extension) { return __awaiter(void 0, void 0, void 0, function () {
+    var previouslyProcessedImgs;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, readDir("src/cache")];
+            case 1:
+                previouslyProcessedImgs = _a.sent();
+                return [2 /*return*/, previouslyProcessedImgs.includes("".concat(filename, "-").concat(width, "X").concat(height, ".").concat(extension))];
+        }
+    });
+}); };
+exports.previouslyProcessed = previouslyProcessed;

@@ -72,4 +72,19 @@ describe("fileSys Functions:", function () {
             return [2 /*return*/];
         });
     }); });
+    fdescribe("Function previouslyProcessed:", function () {
+        it("should return true when fjord 200 200 jpg is passed", function () { return __awaiter(void 0, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = expect;
+                        return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)("fjord", 200, 200, "jpg")];
+                    case 1:
+                        _a.apply(void 0, [_b.sent()]).toEqual(true);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    });
 });
