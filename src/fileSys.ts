@@ -1,3 +1,4 @@
+import { BlobOptions } from "buffer";
 import {promises as fsPromises} from "fs";
 const sharp = require("sharp");
 async function buildCacheDir(){
@@ -51,16 +52,22 @@ function filenameSplit(file:string):{filename:string,width?:string,height?:strin
 const doResize = async (filename:string,width:number,height:number):Promise<unknown>=>{
 
     try{
+
         const data = filenameSplit(filename);
         const targetPath = `src/cache/${data.filename}-${width}X${height}.${data.extension}`;
-        await sharp(`src/imgs/${filename}`).resize(width,height).toFile(targetPath);
+        if(!(await previouslyProcessed(data.filename,width,height,data.extension))){
+            await sharp(`src/imgs/${filename}`).resize(width,height).toFile(targetPath);
+        }else{
+            console.log("Already processed");
+        }
         return `/cache/${data.filename}-${width}X${height}.${data.extension}`;
+
     }catch(err){
         console.log(err);
     }
 }
 
-const previouslyProcessed =  async(filename:string,width:number,height:number,extension:string)=>{
+const previouslyProcessed =  async(filename:string,width:number,height:number,extension:string):Promise<boolean>=>{
     const previouslyProcessedImgs = await readDir("src/cache");
     return (previouslyProcessedImgs as unknown as string[]).includes(`${filename}-${width}X${height}.${extension}`);
 }

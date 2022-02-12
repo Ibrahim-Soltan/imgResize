@@ -86,5 +86,18 @@ describe("fileSys Functions:", function () {
                 }
             });
         }); });
+        it("should return false when fjord 400 400 jpg is passed", function () { return __awaiter(void 0, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = expect;
+                        return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)("fjord", 400, 400, "jpg")];
+                    case 1:
+                        _a.apply(void 0, [_b.sent()]).toEqual(false);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
     });
 });

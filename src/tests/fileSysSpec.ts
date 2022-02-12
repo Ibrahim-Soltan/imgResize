@@ -25,5 +25,8 @@ describe("fileSys Functions:",()=>{
         it("should return true when fjord 200 200 jpg is passed",async()=>{
             expect(await previouslyProcessed("fjord",200,200,"jpg")).toEqual(true);
         })
+        it("should return false when fjord 400 400 jpg is passed",async()=>{
+            expect(await previouslyProcessed("fjord",400,400,"jpg")).toEqual(false);
+        })
     })
 })

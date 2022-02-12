@@ -132,18 +132,23 @@ var doResize = function (filename, width, height) { return __awaiter(void 0, voi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 4, , 5]);
                 data = filenameSplit(filename);
                 targetPath = "src/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
+                if (!!previouslyProcessed(data.filename, width, height, data.extension)) return [3 /*break*/, 2];
                 return [4 /*yield*/, sharp("src/imgs/".concat(filename)).resize(width, height).toFile(targetPath)];
             case 1:
                 _a.sent();
-                return [2 /*return*/, "/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
+                return [3 /*break*/, 3];
             case 2:
+                console.log("Already processed");
+                _a.label = 3;
+            case 3: return [2 /*return*/, "/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
+            case 4:
                 err_4 = _a.sent();
                 console.log(err_4);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
