@@ -60,10 +60,16 @@ const doResize = async (filename:string,width:number,height:number):Promise<unkn
     }
 }
 
+const previouslyProcessed =  async(filename:string,width:number,height:number,extension:string)=>{
+    const previouslyProcessedImgs = await readDir("./cache");
+    return (previouslyProcessedImgs as unknown as string[]).includes(`${filename}-${width}X${height}.${extension}`);
+}
+
 
 export {
     buildCacheDir,
     filenameSplit,
     doResize,
-    readDir
+    readDir,
+    previouslyProcessed
 };
