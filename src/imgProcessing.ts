@@ -2,5 +2,6 @@ import express from 'express';
 import midware from './middleWare';
 const routes = express.Router();
 
-routes.get('/', midware, async (req, res) => {});
+// TODO: Setup a route that uses midware as a middleware
+routes.get('/', midware, () => {});
 export default routes;

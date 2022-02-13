@@ -1,5 +1,6 @@
 import { promises as fsPromises } from 'fs';
 
+// TODO: Split filename seaphoto-200X300.jpg to {filename: "seaphoto", width:200, height: 300, extension:"jpg"}
 function filenameSplit(file: string): {
   filename: string;
   width?: string;
@@ -17,16 +18,18 @@ function filenameSplit(file: string): {
   const height = widthHeight.split('X')[1];
   return { filename, width, height, extension };
 }
-
+// TODO: check if an image already exists with the correct resizing.
 const previouslyProcessed = async (
   filename: string,
   width: number,
   height: number,
   extension: string
 ): Promise<boolean> => {
+  // TODO: if the filename is placeholder, search in the placeholderCache directory, else search in the cache directory
   const dir =
     __dirname + (filename == 'placeholder' ? '\\placeholderCache' : '\\cache');
   const previouslyProcessedImgs = await fsPromises.readdir(dir);
+  // TODO: Return true if the image was previously processed and false otherwise
   return (previouslyProcessedImgs as unknown as string[]).includes(
     `${filename}-${width}X${height}.${extension}`
   );
