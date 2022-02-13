@@ -1,16 +1,28 @@
-# imgResize
-# description API -> Resize and Create placeholders
+# The Landing page project
 
-# Author: Ibrahim Soltan
 
-# Technologies used:
--> Node
--> Express -> Server
--> Jasmine -> Unit Testing
--> Supertest -> Endpoint testinf
+## Project Description
 
-http://localhost:3000/api/?filename=placeholder&width=200&height=200 -> Displays a placeholder
+# API:
+## Resize Images
+## Save resized Images
+## Create Placeholders
 
-http://localhost:3000/api/?filename=palmtunnel.jpg&width=200&height=200 -> Resizes the image
+## Author Name
+Ibrahim Soltan
 
-http://localhost:3000/api/?filename=notfound.jpg&width=200&height=200 -> Displays "The required images was not found"
+
+# Technologies Used:
+
+## Node
+## Express -> Server
+## Jasmine -> Unit Testing
+## Supertest -> Endpoint testing
+
+# Example(Requests):
+
+## http://localhost:3000/api/?filename=placeholder&width=200&height=200 -> Displays a placeholder
+
+## http://localhost:3000/api/?filename=palmtunnel.jpg&width=200&height=200 -> Resizes the image
+
+## http://localhost:3000/api/?filename=notfound.jpg&width=200&height=200 -> Displays "The required images was not found"
