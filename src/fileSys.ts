@@ -60,7 +60,7 @@ const doResize = async (filename:string,width:number,height:number):Promise<unkn
         }else{
             console.log("Already processed");
         }
-        return `/cache/${data.filename}-${width}X${height}.${data.extension}`;
+        return `\\cache\\${data.filename}-${width}X${height}.${data.extension}`;
 
     }catch(err){
         console.log(err);
