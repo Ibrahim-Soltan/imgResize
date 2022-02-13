@@ -1,6 +1,14 @@
 # imgResize
 # description API -> Resize and Create placeholders
 
+# Author: Ibrahim Soltan
+
+# Technologies used:
+-> Node
+-> Express -> Server
+-> Jasmine -> Unit Testing
+-> Supertest -> Endpoint testinf
+
 http://localhost:3000/api/?filename=placeholder&width=200&height=200 -> Displays a placeholder
 
 http://localhost:3000/api/?filename=palmtunnel.jpg&width=200&height=200 -> Resizes the image
