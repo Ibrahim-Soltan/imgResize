@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path/posix";
-import {doResize} from "./fileSys";
+import {doResize} from "./resize";
 import { makePlaceholder } from "./placeholdersFactory";
 const app = express();
 const port = 3000;
