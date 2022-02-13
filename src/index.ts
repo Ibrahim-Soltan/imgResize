@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path/posix";
-import {buildCacheDir,doResize} from "./fileSys";
+import {doResize} from "./fileSys";
 import { makePlaceholder } from "./placeholdersFactory";
 const app = express();
 const port = 3000;
@@ -26,7 +26,6 @@ app.get("/",async(req,res)=>{
 
 app.listen(port,()=>{
     console.log("Server listen to port "+port);
-    buildCacheDir();
 });
 
 //http://localhost:3000/?filename=fjord.jpg&width=200&height=200

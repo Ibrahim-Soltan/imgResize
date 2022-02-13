@@ -36,65 +36,82 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var fileSys_1 = require("../fileSys");
-describe("fileSys Functions:", function () {
-    describe("Function filenameSplit:", function () {
-        it("should split sea-100X100.png", function () {
-            expect((0, fileSys_1.filenameSplit)("sea-100X200.png")).toEqual({
-                filename: "sea",
-                width: "100",
-                height: "200",
-                extension: "png"
-            });
-        });
-        it("should spilt when sea.png leaving ", function () {
-            expect((0, fileSys_1.filenameSplit)("sea.png")).toEqual({
-                filename: "sea",
-                extension: "png"
-            });
-        });
-    });
-    describe("Function readDir:", function () { return __awaiter(void 0, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            it("should return [encenadaport.jpg,fjord.jpg,icelandwaterfall.jpg,palmtunnel.jpg,santamonica.jpg] when imgs is passes", function () { return __awaiter(void 0, void 0, void 0, function () {
-                var _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _a = expect;
-                            return [4 /*yield*/, (0, fileSys_1.readDir)("src/imgs")];
-                        case 1:
-                            _a.apply(void 0, [(_b.sent())]).toEqual(["encenadaport.jpg", "fjord.jpg", "icelandwaterfall.jpg", "palmtunnel.jpg", "santamonica.jpg"]);
-                            return [2 /*return*/];
-                    }
-                });
-            }); });
-            return [2 /*return*/];
-        });
-    }); });
-    fdescribe("Function previouslyProcessed:", function () {
-        it("should return true when fjord 200 200 jpg is passed", function () { return __awaiter(void 0, void 0, void 0, function () {
+var buildFileSys_1 = require("../buildFileSys");
+describe("buildFileSys Functions", function () {
+    describe("Function buildDir", function () {
+        it("should create an imgs dir", function () { return __awaiter(void 0, void 0, void 0, function () {
             var _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
-                        _a = expect;
-                        return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)("fjord", 200, 200, "jpg")];
+                    case 0: return [4 /*yield*/, (0, buildFileSys_1.buildDir)("imgs")];
                     case 1:
+                        _b.sent();
+                        _a = expect;
+                        return [4 /*yield*/, (0, buildFileSys_1.isDirCreated)("imgs")];
+                    case 2:
                         _a.apply(void 0, [_b.sent()]).toEqual(true);
                         return [2 /*return*/];
                 }
             });
         }); });
-        it("should return false when fjord 400 400 jpg is passed", function () { return __awaiter(void 0, void 0, void 0, function () {
+        it("should create a cache dir", function () { return __awaiter(void 0, void 0, void 0, function () {
             var _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
-                        _a = expect;
-                        return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)("fjord", 400, 400, "jpg")];
+                    case 0: return [4 /*yield*/, (0, buildFileSys_1.buildDir)("cache")];
                     case 1:
-                        _a.apply(void 0, [_b.sent()]).toEqual(false);
+                        _b.sent();
+                        _a = expect;
+                        return [4 /*yield*/, (0, buildFileSys_1.isDirCreated)("cache")];
+                    case 2:
+                        _a.apply(void 0, [_b.sent()]).toEqual(true);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it("should create a placeholderCache dir", function () { return __awaiter(void 0, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, (0, buildFileSys_1.buildDir)("placeholderCache")];
+                    case 1:
+                        _b.sent();
+                        _a = expect;
+                        return [4 /*yield*/, (0, buildFileSys_1.isDirCreated)("placeholderCache")];
+                    case 2:
+                        _a.apply(void 0, [_b.sent()]).toEqual(true);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    });
+    describe("Function buildFileSystem", function () {
+        it("should create (imgs,cache,placeholderCache) dirs", function () { return __awaiter(void 0, void 0, void 0, function () {
+            var _a, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0: return [4 /*yield*/, (0, buildFileSys_1.buildFileSystem)()];
+                    case 1:
+                        _d.sent();
+                        _a = expect;
+                        return [4 /*yield*/, (0, buildFileSys_1.isDirCreated)("imgs")];
+                    case 2:
+                        _c = (_d.sent()) == true;
+                        if (!_c) return [3 /*break*/, 4];
+                        return [4 /*yield*/, (0, buildFileSys_1.isDirCreated)("cache")];
+                    case 3:
+                        _c = (_d.sent()) == true;
+                        _d.label = 4;
+                    case 4:
+                        _b = _c;
+                        if (!_b) return [3 /*break*/, 6];
+                        return [4 /*yield*/, (0, buildFileSys_1.isDirCreated)("placeholderCache")];
+                    case 5:
+                        _b = (_d.sent()) == true;
+                        _d.label = 6;
+                    case 6:
+                        _a.apply(void 0, [_b])
+                            .toEqual(true);
                         return [2 /*return*/];
                 }
             });

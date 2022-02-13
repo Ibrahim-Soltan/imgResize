@@ -35,43 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var fileSys_1 = require("./fileSys");
-var placeholdersFactory_1 = require("./placeholdersFactory");
-var app = (0, express_1.default)();
-var port = 3000;
-app.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, width, height, finalImg;
+exports.makePlaceholder = void 0;
+var sharp = require("sharp");
+var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0, void 0, function () {
+    var fontSize, overlay;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                filename = req.query.filename;
-                width = parseInt(req.query.width);
-                height = parseInt(req.query.height);
-                if (!(filename == "placeholder")) return [3 /*break*/, 2];
-                console.log("making placeholder");
-                return [4 /*yield*/, (0, placeholdersFactory_1.makePlaceholder)(width, height)];
+                fontSize = Math.min(width, height) / 10;
+                overlay = "<svg width=\"".concat(width - 20, "\" height=\"").concat(height - 20, "\">\n    <text x=\"50%\" y=\"50%\" font-family=\"sans-serif\" font-size=\"").concat(fontSize, "\" text-anchor=\"middle\">placeholder</text>\n  </svg>");
+                return [4 /*yield*/, sharp({
+                        create: {
+                            width: width,
+                            height: height,
+                            channels: 4,
+                            background: { r: 200, g: 200, b: 200, alpha: 1 }
+                        }
+                    })
+                        .composite([{
+                            input: Buffer.from(overlay),
+                            gravity: 'center',
+                        }])
+                        .jpeg()
+                        .toFile("".concat(__dirname, "/placeholderCache/placeholder-").concat(width, "X").concat(height, ".png"))];
             case 1:
-                finalImg = _a.sent();
-                res.sendFile(__dirname + finalImg);
-                return [3 /*break*/, 4];
-            case 2: return [4 /*yield*/, (0, fileSys_1.doResize)(filename, width, height)];
-            case 3:
-                finalImg = _a.sent();
-                res.sendFile(__dirname + finalImg);
-                _a.label = 4;
-            case 4:
-                console.log(__dirname + finalImg);
-                return [2 /*return*/];
+                _a.sent();
+                return [2 /*return*/, "\\placeholderCache\\placeholder-".concat(width, "X").concat(height, ".png")];
         }
     });
-}); });
-app.listen(port, function () {
-    console.log("Server listen to port " + port);
-});
-//http://localhost:3000/?filename=fjord.jpg&width=200&height=200
-//D:\FWD Web Dev\Advanced\imgResize\src\placeholderCache\placeholder-300X300.png
+}); };
+exports.makePlaceholder = makePlaceholder;

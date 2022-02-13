@@ -1,40 +1,6 @@
-import { BlobOptions } from "buffer";
 import {promises as fsPromises} from "fs";
 const sharp = require("sharp");
-async function buildCacheDir(){
-    try{
-        if(!(await isCacheDirCreated())){
-            await fsPromises.mkdir("src/cache");
-        }
-        else{
-            console.log("Cache directory already created.");
-        }
-    }catch(err){
-        console.log(err);
-    }
-}
 
-async function isCacheDirCreated():Promise<boolean>{
-    try{
-        const files:unknown = await readFileSys();
-        return (files as string[]).includes("cache");
-    }catch(err){
-        return false;
-    }
-}    
-
-async function readDir(dir:string) {
-    try {
-        const files = await fsPromises.readdir(dir);
-        return files;
-      } catch (err) {
-        console.error(err);
-      } 
-}
-
-async function readFileSys(){
-    return readDir("src");
-}
 
 function filenameSplit(file:string):{filename:string,width?:string,height?:string,extension:string}{
     const filenameWidthHeight = file.split(".")[0];
@@ -52,11 +18,10 @@ function filenameSplit(file:string):{filename:string,width?:string,height?:strin
 const doResize = async (filename:string,width:number,height:number):Promise<unknown>=>{
 
     try{
-
         const data = filenameSplit(filename);
-        const targetPath = `src/cache/${data.filename}-${width}X${height}.${data.extension}`;
+        const targetPath = `src\\cache\\${data.filename}-${width}X${height}.${data.extension}`;
         if(!(await previouslyProcessed(data.filename,width,height,data.extension))){
-            await sharp(`src/imgs/${filename}`).resize(width,height).toFile(targetPath);
+            await sharp(`${__dirname}\\imgs\\${filename}`).resize(width,height).toFile(targetPath);
         }else{
             console.log("Already processed");
         }
@@ -68,15 +33,14 @@ const doResize = async (filename:string,width:number,height:number):Promise<unkn
 }
 
 const previouslyProcessed =  async(filename:string,width:number,height:number,extension:string):Promise<boolean>=>{
-    const previouslyProcessedImgs = await readDir("src/cache");
+    const dir = __dirname+(filename=="placeholder"?"\\placeholderCache":"\\cache");
+    const previouslyProcessedImgs = await fsPromises.readdir(dir);
     return (previouslyProcessedImgs as unknown as string[]).includes(`${filename}-${width}X${height}.${extension}`);
 }
 
 
 export {
-    buildCacheDir,
     filenameSplit,
     doResize,
-    readDir,
     previouslyProcessed
 };

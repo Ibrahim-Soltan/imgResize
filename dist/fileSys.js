@@ -36,84 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.previouslyProcessed = exports.readDir = exports.doResize = exports.filenameSplit = exports.buildCacheDir = void 0;
+exports.previouslyProcessed = exports.doResize = exports.filenameSplit = void 0;
 var fs_1 = require("fs");
 var sharp = require("sharp");
-function buildCacheDir() {
-    return __awaiter(this, void 0, void 0, function () {
-        var err_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 5, , 6]);
-                    return [4 /*yield*/, isCacheDirCreated()];
-                case 1:
-                    if (!!(_a.sent())) return [3 /*break*/, 3];
-                    return [4 /*yield*/, fs_1.promises.mkdir("src/cache")];
-                case 2:
-                    _a.sent();
-                    return [3 /*break*/, 4];
-                case 3:
-                    console.log("Cache directory already created.");
-                    _a.label = 4;
-                case 4: return [3 /*break*/, 6];
-                case 5:
-                    err_1 = _a.sent();
-                    console.log(err_1);
-                    return [3 /*break*/, 6];
-                case 6: return [2 /*return*/];
-            }
-        });
-    });
-}
-exports.buildCacheDir = buildCacheDir;
-function isCacheDirCreated() {
-    return __awaiter(this, void 0, void 0, function () {
-        var files, err_2;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, readFileSys()];
-                case 1:
-                    files = _a.sent();
-                    return [2 /*return*/, files.includes("cache")];
-                case 2:
-                    err_2 = _a.sent();
-                    return [2 /*return*/, false];
-                case 3: return [2 /*return*/];
-            }
-        });
-    });
-}
-function readDir(dir) {
-    return __awaiter(this, void 0, void 0, function () {
-        var files, err_3;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fs_1.promises.readdir(dir)];
-                case 1:
-                    files = _a.sent();
-                    return [2 /*return*/, files];
-                case 2:
-                    err_3 = _a.sent();
-                    console.error(err_3);
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/];
-            }
-        });
-    });
-}
-exports.readDir = readDir;
-function readFileSys() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, readDir("src")];
-        });
-    });
-}
 function filenameSplit(file) {
     var filenameWidthHeight = file.split(".")[0];
     var extension = file.split(".")[1];
@@ -128,36 +53,40 @@ function filenameSplit(file) {
 }
 exports.filenameSplit = filenameSplit;
 var doResize = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, targetPath, err_4;
+    var data, targetPath, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
+                _a.trys.push([0, 5, , 6]);
                 data = filenameSplit(filename);
-                targetPath = "src/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
-                if (!!previouslyProcessed(data.filename, width, height, data.extension)) return [3 /*break*/, 2];
-                return [4 /*yield*/, sharp("src/imgs/".concat(filename)).resize(width, height).toFile(targetPath)];
+                targetPath = "src\\cache\\".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
+                return [4 /*yield*/, previouslyProcessed(data.filename, width, height, data.extension)];
             case 1:
-                _a.sent();
-                return [3 /*break*/, 3];
+                if (!!(_a.sent())) return [3 /*break*/, 3];
+                return [4 /*yield*/, sharp("".concat(__dirname, "\\imgs\\").concat(filename)).resize(width, height).toFile(targetPath)];
             case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
                 console.log("Already processed");
-                _a.label = 3;
-            case 3: return [2 /*return*/, "/cache/".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
-            case 4:
-                err_4 = _a.sent();
-                console.log(err_4);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                _a.label = 4;
+            case 4: return [2 /*return*/, "\\cache\\".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
+            case 5:
+                err_1 = _a.sent();
+                console.log(err_1);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
 exports.doResize = doResize;
 var previouslyProcessed = function (filename, width, height, extension) { return __awaiter(void 0, void 0, void 0, function () {
-    var previouslyProcessedImgs;
+    var dir, previouslyProcessedImgs;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, readDir("src/cache")];
+            case 0:
+                dir = __dirname + (filename == "placeholder" ? "\\placeholderCache" : "\\cache");
+                return [4 /*yield*/, fs_1.promises.readdir(dir)];
             case 1:
                 previouslyProcessedImgs = _a.sent();
                 return [2 /*return*/, previouslyProcessedImgs.includes("".concat(filename, "-").concat(width, "X").concat(height, ".").concat(extension))];
