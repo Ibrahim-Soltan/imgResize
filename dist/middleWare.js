@@ -35,16 +35,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var middleWare_1 = __importDefault(require("./middleWare"));
-var routes = express_1.default.Router();
-routes.get("/", middleWare_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var placeholdersFactory_1 = require("./placeholdersFactory");
+var resize_1 = require("./resize");
+var fs_1 = require("fs");
+var midware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var filename, width, height, finalImg;
     return __generator(this, function (_a) {
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                filename = req.query.filename;
+                width = parseInt(req.query.width);
+                height = parseInt(req.query.height);
+                if (!(filename == "placeholder")) return [3 /*break*/, 2];
+                console.log("making placeholder");
+                return [4 /*yield*/, (0, placeholdersFactory_1.makePlaceholder)(width, height)];
+            case 1:
+                finalImg = _a.sent();
+                res.sendFile(__dirname + finalImg);
+                res.status(200);
+                return [3 /*break*/, 6];
+            case 2: return [4 /*yield*/, fs_1.promises.readdir(__dirname + "/imgs")];
+            case 3:
+                if (!!(_a.sent()).includes(filename)) return [3 /*break*/, 4];
+                res.status(404);
+                res.send("The required image is not found");
+                return [3 /*break*/, 6];
+            case 4: return [4 /*yield*/, (0, resize_1.doResize)(filename, width, height)];
+            case 5:
+                finalImg = _a.sent();
+                res.sendFile(__dirname + finalImg);
+                res.status(200);
+                _a.label = 6;
+            case 6:
+                next();
+                return [2 /*return*/];
+        }
     });
-}); });
-exports.default = routes;
+}); };
+exports.default = midware;
