@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var placeholdersFactory_1 = require("./placeholdersFactory");
 var resize_1 = require("./resize");
+var fs_1 = require("fs");
 var routes = express_1.default.Router();
 routes.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var filename, width, height, finalImg;
@@ -57,15 +58,21 @@ routes.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
             case 1:
                 finalImg = _a.sent();
                 res.sendFile(__dirname + finalImg);
-                return [3 /*break*/, 4];
-            case 2: return [4 /*yield*/, (0, resize_1.doResize)(filename, width, height)];
+                res.status(200);
+                return [3 /*break*/, 6];
+            case 2: return [4 /*yield*/, fs_1.promises.readdir(__dirname + "/imgs")];
             case 3:
+                if (!!(_a.sent()).includes(filename)) return [3 /*break*/, 4];
+                res.status(404);
+                res.send("The required image is not found");
+                return [3 /*break*/, 6];
+            case 4: return [4 /*yield*/, (0, resize_1.doResize)(filename, width, height)];
+            case 5:
                 finalImg = _a.sent();
                 res.sendFile(__dirname + finalImg);
-                _a.label = 4;
-            case 4:
-                console.log(__dirname + finalImg);
-                return [2 /*return*/];
+                res.status(200);
+                _a.label = 6;
+            case 6: return [2 /*return*/];
         }
     });
 }); });

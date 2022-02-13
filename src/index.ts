@@ -11,6 +11,9 @@ app.listen(port,()=>{
     buildFileSystem();
 });
 
+export default app;
+
+
 //http://localhost:3000/?filename=fjord.jpg&width=200&height=200
 
 //D:\FWD Web Dev\Advanced\imgResize\src\placeholderCache\placeholder-300X300.png
