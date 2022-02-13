@@ -1,18 +1,25 @@
-
-
-
-const { svg } = require("svg-text-util")
 const sharp = require("sharp")
 
-const makePlaceholder = (width:number,height:number):string=>{
-    const textSize = Math.min(width,height)/4;
-    const buffer = svg(1000, 400)
-        .text('placeholder', { size: textSize, color: 'red', align: 'center' })
-        .   buffer()
+const makePlaceholder = async (width:number,height:number):Promise<string>=>{
+    const fontSize = Math.min(width,height)/10;
+    const overlay = `<svg width="${width - 20}" height="${height - 20}">
+    <text x="50%" y="50%" font-family="sans-serif" font-size="${fontSize}" text-anchor="middle">placeholder</text>
+  </svg>`;
 
-    sharp(buffer)
-        .png()
-            .toFile(`${__dirname}/placeholderCache/placeholder-${width}X${height}.png`);
+  await sharp({
+    create: {
+      width: width,
+      height: height,
+      channels: 4,
+      background: { r: 200, g: 200, b: 200, alpha: 1 }
+    }
+  })
+    .composite([{
+      input: Buffer.from(overlay),
+      gravity: 'center',
+    }])
+    .jpeg()
+    .toFile(`${__dirname}/placeholderCache/placeholder-${width}X${height}.png`);
     
     return `\\placeholderCache\\placeholder-${width}X${height}.png`;
 

@@ -12,7 +12,7 @@ app.get("/",async(req,res)=>{
     let finalImg:unknown;
     if(filename == "placeholder"){ 
         console.log("making placeholder");  
-        finalImg = makePlaceholder(width,height);
+        finalImg = await makePlaceholder(width,height);
         
         res.sendFile(__dirname+finalImg);
     }
