@@ -15,7 +15,10 @@ function filenameSplit(file:string):{filename:string,width?:string,height?:strin
 
 const previouslyProcessed =  async(filename:string,width:number,height:number,extension:string):Promise<boolean>=>{
     const dir = __dirname+(filename=="placeholder"?"\\placeholderCache":"\\cache");
+    console.log(`searching dir ${dir} for ${filename}-${width}X${height}.${extension}`)
     const previouslyProcessedImgs = await fsPromises.readdir(dir);
+    console.log(previouslyProcessedImgs);
+    console.log((previouslyProcessedImgs as unknown as string[]).includes(`${filename}-${width}X${height}.${extension}`));
     return (previouslyProcessedImgs as unknown as string[]).includes(`${filename}-${width}X${height}.${extension}`);
 }
 

@@ -36,9 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.previouslyProcessed = exports.doResize = exports.filenameSplit = void 0;
+exports.previouslyProcessed = exports.filenameSplit = void 0;
 var fs_1 = require("fs");
-var sharp = require("sharp");
 function filenameSplit(file) {
     var filenameWidthHeight = file.split(".")[0];
     var extension = file.split(".")[1];
@@ -52,43 +51,18 @@ function filenameSplit(file) {
     return { filename: filename, width: width, height: height, extension: extension };
 }
 exports.filenameSplit = filenameSplit;
-var doResize = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, targetPath, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 5, , 6]);
-                data = filenameSplit(filename);
-                targetPath = "src\\cache\\".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
-                return [4 /*yield*/, previouslyProcessed(data.filename, width, height, data.extension)];
-            case 1:
-                if (!!(_a.sent())) return [3 /*break*/, 3];
-                return [4 /*yield*/, sharp("".concat(__dirname, "\\imgs\\").concat(filename)).resize(width, height).toFile(targetPath)];
-            case 2:
-                _a.sent();
-                return [3 /*break*/, 4];
-            case 3:
-                console.log("Already processed");
-                _a.label = 4;
-            case 4: return [2 /*return*/, "\\cache\\".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
-            case 5:
-                err_1 = _a.sent();
-                console.log(err_1);
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
-        }
-    });
-}); };
-exports.doResize = doResize;
 var previouslyProcessed = function (filename, width, height, extension) { return __awaiter(void 0, void 0, void 0, function () {
     var dir, previouslyProcessedImgs;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 dir = __dirname + (filename == "placeholder" ? "\\placeholderCache" : "\\cache");
+                console.log("searching dir ".concat(dir, " for ").concat(filename, "-").concat(width, "X").concat(height, ".").concat(extension));
                 return [4 /*yield*/, fs_1.promises.readdir(dir)];
             case 1:
                 previouslyProcessedImgs = _a.sent();
+                console.log(previouslyProcessedImgs);
+                console.log(previouslyProcessedImgs.includes("".concat(filename, "-").concat(width, "X").concat(height, ".").concat(extension)));
                 return [2 /*return*/, previouslyProcessedImgs.includes("".concat(filename, "-").concat(width, "X").concat(height, ".").concat(extension))];
         }
     });

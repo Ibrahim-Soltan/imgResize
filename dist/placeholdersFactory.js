@@ -35,17 +35,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makePlaceholder = void 0;
-var sharp = require("sharp");
+var sharp_1 = __importDefault(require("sharp"));
+var fileSys_1 = require("./fileSys");
 var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var fontSize, overlay;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
+            case 0: return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)("placeholder", width, height, "png")];
+            case 1:
+                if (!!(_a.sent())) return [3 /*break*/, 3];
                 fontSize = Math.min(width, height) / 10;
                 overlay = "<svg width=\"".concat(width - 20, "\" height=\"").concat(height - 20, "\">\n    <text x=\"50%\" y=\"50%\" font-family=\"sans-serif\" font-size=\"").concat(fontSize, "\" text-anchor=\"middle\">placeholder</text>\n  </svg>");
-                return [4 /*yield*/, sharp({
+                return [4 /*yield*/, (0, sharp_1.default)({
                         create: {
                             width: width,
                             height: height,
@@ -58,10 +64,14 @@ var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0
                             gravity: 'center',
                         }])
                         .jpeg()
-                        .toFile("".concat(__dirname, "/placeholderCache/placeholder-").concat(width, "X").concat(height, ".png"))];
-            case 1:
+                        .toFile("".concat(__dirname, "\\placeholderCache\\placeholder-").concat(width, "X").concat(height, ".png"))];
+            case 2:
                 _a.sent();
-                return [2 /*return*/, "\\placeholderCache\\placeholder-".concat(width, "X").concat(height, ".png")];
+                return [3 /*break*/, 4];
+            case 3:
+                console.log("Already processed.");
+                _a.label = 4;
+            case 4: return [2 /*return*/, "\\placeholderCache\\placeholder-".concat(width, "X").concat(height, ".png")];
         }
     });
 }); };

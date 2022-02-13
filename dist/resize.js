@@ -39,41 +39,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var resize_1 = require("./resize");
-var placeholdersFactory_1 = require("./placeholdersFactory");
-var buildFileSys_1 = require("./buildFileSys");
-var app = (0, express_1.default)();
-var port = 3000;
-app.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, width, height, finalImg;
+exports.doResize = void 0;
+var sharp_1 = __importDefault(require("sharp"));
+var fileSys_1 = require("./fileSys");
+var doResize = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, targetPath, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                filename = req.query.filename;
-                width = parseInt(req.query.width);
-                height = parseInt(req.query.height);
-                if (!(filename == "placeholder")) return [3 /*break*/, 2];
-                console.log("making placeholder");
-                return [4 /*yield*/, (0, placeholdersFactory_1.makePlaceholder)(width, height)];
+                _a.trys.push([0, 5, , 6]);
+                data = (0, fileSys_1.filenameSplit)(filename);
+                targetPath = "".concat(__dirname, "\\cache\\").concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
+                return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)(data.filename, width, height, data.extension)];
             case 1:
-                finalImg = _a.sent();
-                res.sendFile(__dirname + finalImg);
+                if (!!(_a.sent())) return [3 /*break*/, 3];
+                return [4 /*yield*/, (0, sharp_1.default)("".concat(__dirname, "\\imgs\\").concat(filename)).resize(width, height).toFile(targetPath)];
+            case 2:
+                _a.sent();
                 return [3 /*break*/, 4];
-            case 2: return [4 /*yield*/, (0, resize_1.doResize)(filename, width, height)];
             case 3:
-                finalImg = _a.sent();
-                res.sendFile(__dirname + finalImg);
+                console.log("Already processed");
                 _a.label = 4;
-            case 4:
-                console.log(__dirname + finalImg);
-                return [2 /*return*/];
+            case 4: return [2 /*return*/, "\\cache\\".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
+            case 5:
+                err_1 = _a.sent();
+                console.log(err_1);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
-}); });
-app.listen(port, function () {
-    console.log("Server listen to port " + port);
-    (0, buildFileSys_1.buildFileSystem)();
-});
-//http://localhost:3000/?filename=fjord.jpg&width=200&height=200
-//D:\FWD Web Dev\Advanced\imgResize\src\placeholderCache\placeholder-300X300.png
+}); };
+exports.doResize = doResize;
