@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var placeholdersFactory_1 = require("./placeholdersFactory");
 var resize_1 = require("./resize");
 var fs_1 = require("fs");
+// TODO: Middle Ware that handles the requests
 var midware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var filename, width, height, finalImg;
     return __generator(this, function (_a) {
@@ -47,28 +48,33 @@ var midware = function (req, res, next) { return __awaiter(void 0, void 0, void 
                 filename = req.query.filename;
                 width = parseInt(req.query.width);
                 height = parseInt(req.query.height);
-                console.log("\n\n");
-                console.log("Request sent:");
-                if (!(filename == "placeholder")) return [3 /*break*/, 2];
+                console.log('\n\n');
+                console.log('Request sent:');
+                if (!(filename == 'placeholder')) return [3 /*break*/, 2];
                 console.log("Make placeholder dimensions:".concat(width, "X").concat(height, "."));
                 return [4 /*yield*/, (0, placeholdersFactory_1.makePlaceholder)(width, height)];
             case 1:
+                // TODO: make a placeholder image
                 finalImg = _a.sent();
+                // TODO: Display the placeholder to the user
                 res.sendFile(__dirname + finalImg);
                 res.status(200);
                 return [3 /*break*/, 6];
-            case 2: return [4 /*yield*/, fs_1.promises.readdir(__dirname + "/imgs")];
+            case 2: return [4 /*yield*/, fs_1.promises.readdir(__dirname + '/imgs')];
             case 3:
                 if (!!(_a.sent()).includes(filename)) return [3 /*break*/, 4];
-                console.log("Request deneid ... The required image is not found.");
+                // TODO: If the filename is not placeholder and is not found in the images file reject the request.
+                console.log('Request deneid ... The required image is not found.');
                 res.status(404);
-                res.send("The required image is not found");
+                res.send('The required image is not found');
                 return [3 /*break*/, 6];
             case 4:
                 console.log("Resize ".concat(filename, " to ").concat(width, "X").concat(height, "."));
                 return [4 /*yield*/, (0, resize_1.doResize)(filename, width, height)];
             case 5:
+                //TODO: Resize the image.
                 finalImg = _a.sent();
+                //TODO: Display the image.
                 res.sendFile(__dirname + finalImg);
                 res.status(200);
                 _a.label = 6;

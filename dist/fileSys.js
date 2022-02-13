@@ -38,28 +38,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.previouslyProcessed = exports.filenameSplit = void 0;
 var fs_1 = require("fs");
+// TODO: Split filename seaphoto-200X300.jpg to {filename: "seaphoto", width:200, height: 300, extension:"jpg"}
 function filenameSplit(file) {
-    var filenameWidthHeight = file.split(".")[0];
-    var extension = file.split(".")[1];
-    var filename = filenameWidthHeight.split("-")[0];
-    if (filenameWidthHeight.split("-").length == 1) {
+    var filenameWidthHeight = file.split('.')[0];
+    var extension = file.split('.')[1];
+    var filename = filenameWidthHeight.split('-')[0];
+    if (filenameWidthHeight.split('-').length == 1) {
         return { filename: filename, extension: extension };
     }
-    var widthHeight = filenameWidthHeight.split("-")[1];
-    var width = widthHeight.split("X")[0];
-    var height = widthHeight.split("X")[1];
+    var widthHeight = filenameWidthHeight.split('-')[1];
+    var width = widthHeight.split('X')[0];
+    var height = widthHeight.split('X')[1];
     return { filename: filename, width: width, height: height, extension: extension };
 }
 exports.filenameSplit = filenameSplit;
+// TODO: check if an image already exists with the correct resizing.
 var previouslyProcessed = function (filename, width, height, extension) { return __awaiter(void 0, void 0, void 0, function () {
     var dir, previouslyProcessedImgs;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                dir = __dirname + (filename == "placeholder" ? "\\placeholderCache" : "\\cache");
+                dir = __dirname + (filename == 'placeholder' ? '\\placeholderCache' : '\\cache');
                 return [4 /*yield*/, fs_1.promises.readdir(dir)];
             case 1:
                 previouslyProcessedImgs = _a.sent();
+                // TODO: Return true if the image was previously processed and false otherwise
                 return [2 /*return*/, previouslyProcessedImgs.includes("".concat(filename, "-").concat(width, "X").concat(height, ".").concat(extension))];
         }
     });

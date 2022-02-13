@@ -42,36 +42,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.makePlaceholder = void 0;
 var sharp_1 = __importDefault(require("sharp"));
 var fileSys_1 = require("./fileSys");
+// TODO: Create a placeholder image
 var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var fontSize, overlay;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)("placeholder", width, height, "png")];
+            case 0: return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)('placeholder', width, height, 'png')];
             case 1:
                 if (!!(_a.sent())) return [3 /*break*/, 3];
                 fontSize = Math.min(width, height) / 10;
                 overlay = "<svg width=\"".concat(width - 20, "\" height=\"").concat(height - 20, "\">\n    <text x=\"50%\" y=\"50%\" font-family=\"sans-serif\" font-size=\"").concat(fontSize, "\" text-anchor=\"middle\">placeholder</text>\n  </svg>");
+                //TODO: name the file placeholder-widthXheight.png to be able to find it later.
                 return [4 /*yield*/, (0, sharp_1.default)({
                         create: {
                             width: width,
                             height: height,
                             channels: 4,
-                            background: { r: 200, g: 200, b: 200, alpha: 1 }
-                        }
+                            background: { r: 200, g: 200, b: 200, alpha: 1 },
+                        },
                     })
-                        .composite([{
+                        .composite([
+                        {
                             input: Buffer.from(overlay),
                             gravity: 'center',
-                        }])
+                        },
+                    ])
                         .jpeg()
                         .toFile("".concat(__dirname, "\\placeholderCache\\placeholder-").concat(width, "X").concat(height, ".png"))];
             case 2:
+                //TODO: name the file placeholder-widthXheight.png to be able to find it later.
                 _a.sent();
                 return [3 /*break*/, 4];
             case 3:
-                console.log("The request was previously processed");
+                console.log('The request was previously processed');
                 _a.label = 4;
-            case 4: return [2 /*return*/, "\\placeholderCache\\placeholder-".concat(width, "X").concat(height, ".png")];
+            case 4: 
+            //TODO: Return the filepath of the required place to the middleware to display it.
+            return [2 /*return*/, "\\placeholderCache\\placeholder-".concat(width, "X").concat(height, ".png")];
         }
     });
 }); };

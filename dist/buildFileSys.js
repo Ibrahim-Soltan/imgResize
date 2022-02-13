@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildFileSystem = exports.isDirCreated = exports.buildDir = void 0;
 var fs_1 = require("fs");
+// TODO: Check if a directory is created
 function isDirCreated(dir) {
     return __awaiter(this, void 0, void 0, function () {
         var files, err_1;
@@ -48,6 +49,7 @@ function isDirCreated(dir) {
                     return [4 /*yield*/, fs_1.promises.readdir(__dirname)];
                 case 1:
                     files = _a.sent();
+                    //TODO: Return true is the directory exists and false otherwise
                     return [2 /*return*/, files.includes(dir)];
                 case 2:
                     err_1 = _a.sent();
@@ -58,6 +60,7 @@ function isDirCreated(dir) {
     });
 }
 exports.isDirCreated = isDirCreated;
+// TODO : Build a directory.
 function buildDir(dir) {
     return __awaiter(this, void 0, void 0, function () {
         var err_2;
@@ -68,12 +71,14 @@ function buildDir(dir) {
                     return [4 /*yield*/, isDirCreated(dir)];
                 case 1:
                     if (!!(_a.sent())) return [3 /*break*/, 3];
+                    // TODO: If the directory does not exist, create it
                     console.log("Creating ".concat(dir, " directory"));
                     return [4 /*yield*/, fs_1.promises.mkdir(__dirname + "\\".concat(dir))];
                 case 2:
                     _a.sent();
                     return [3 /*break*/, 4];
                 case 3:
+                    // TODO: If the directory was previouslt created, log a message
                     console.log("".concat(dir, " directory already created."));
                     _a.label = 4;
                 case 4: return [3 /*break*/, 6];
@@ -87,11 +92,19 @@ function buildDir(dir) {
     });
 }
 exports.buildDir = buildDir;
+// TODO: Build the three main directories
 function buildFileSystem() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             try {
-                Promise.all([buildDir("imgs"), buildDir("cache"), buildDir("placeholderCache")]);
+                Promise.all([
+                    //Saves original images
+                    buildDir('imgs'),
+                    //Saves processed(Resized) images
+                    buildDir('cache'),
+                    //Save created placeholders
+                    buildDir('placeholderCache'),
+                ]);
             }
             catch (err) {
                 console.log(err);
