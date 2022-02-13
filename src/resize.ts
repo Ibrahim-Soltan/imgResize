@@ -7,9 +7,9 @@ const doResize = async (filename:string,width:number,height:number):Promise<unkn
         const data = filenameSplit(filename);
         const targetPath = `${__dirname}\\cache\\${data.filename}-${width}X${height}.${data.extension}`;
         if(!(await previouslyProcessed(data.filename,width,height,data.extension))){
-            await sharp(`${__dirname}\\imgs\\${filename}`).resize(width,height).toFile(targetPath);
+            await sharp(`${__dirname}\\imgs\\${filename}`).resize(width,height,{fit:"fill"}).toFile(targetPath);
         }else{
-            console.log("Already processed");
+            console.log("The request was previously processed");
         }
         return `\\cache\\${data.filename}-${width}X${height}.${data.extension}`;
 

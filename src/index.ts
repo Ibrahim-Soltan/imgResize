@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "./imgProcessing";
 import { buildFileSystem } from "./buildFileSys";
-import midware from "./middleWare";
+
 const app = express();
 const port = 3000;
 

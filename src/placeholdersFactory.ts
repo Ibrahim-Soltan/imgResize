@@ -23,7 +23,7 @@ const makePlaceholder = async (width:number,height:number):Promise<string>=>{
     .toFile(`${__dirname}\\placeholderCache\\placeholder-${width}X${height}.png`);
   }
   else{
-    console.log("Already processed.");
+    console.log("The request was previously processed");
   }
     return `\\placeholderCache\\placeholder-${width}X${height}.png`;
 

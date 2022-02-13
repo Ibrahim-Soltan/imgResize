@@ -12,6 +12,7 @@ async function isDirCreated(dir:string):Promise<boolean>{
 async function buildDir(dir:string){
     try{
         if(!(await isDirCreated(dir))){
+            console.log(`Creating ${dir} directory`);
             await fsPromises.mkdir(__dirname+`\\${dir}`);
         }
         else{
