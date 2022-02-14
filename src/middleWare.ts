@@ -2,6 +2,7 @@ import express from 'express';
 import { makePlaceholder } from './placeholdersFactory';
 import { doResize } from './resize';
 import { promises as fsPromises } from 'fs';
+import path from 'path/posix';
 
 // TODO: Middle Ware that handles the requests
 const midware = async (
@@ -29,7 +30,7 @@ const midware = async (
     // TODO: make a placeholder image
     finalImg = await makePlaceholder(width, height);
     // TODO: Display the placeholder to the user
-    res.sendFile(__dirname + finalImg);
+    res.sendFile(path.join(__dirname,finalImg as string));
     res.status(200);
   } else if (
     !(await fsPromises.readdir(__dirname + '/imgs')).includes(filename)
@@ -43,7 +44,7 @@ const midware = async (
     //TODO: Resize the image.
     finalImg = await doResize(filename, width, height);
     //TODO: Display the image.
-    res.sendFile(__dirname + finalImg);
+    res.sendFile(path.join(__dirname,finalImg as string));
     res.status(200);
   }}
   next();

@@ -1,5 +1,8 @@
+import path from 'path/posix';
 import sharp from 'sharp';
 import { previouslyProcessed } from './fileSys';
+
+// Note: the placeholderCache directory is created when the server starts.
 
 // TODO: Create a placeholder image
 const makePlaceholder = async (
@@ -29,14 +32,16 @@ const makePlaceholder = async (
         },
       ])
       .jpeg()
+      
       .toFile(
-        `${__dirname}\\placeholderCache\\placeholder-${width}X${height}.png`
+        path.join(__dirname,"placeholderCache",`placeholder-${width}X${height}.png`)
       );
   } else {
     console.log('The request was previously processed');
   }
   //TODO: Return the filepath of the required place to the middleware to display it.
-  return `\\placeholderCache\\placeholder-${width}X${height}.png`;
+  
+  return path.join("placeholderCache",`placeholder-${width}X${height}.png`);
 };
 
 export { makePlaceholder };
