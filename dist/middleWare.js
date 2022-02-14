@@ -71,7 +71,7 @@ var midware = function (req, res, next) { return __awaiter(void 0, void 0, void 
                 res.sendFile(posix_1.default.join(__dirname, finalImg));
                 res.status(200);
                 return [3 /*break*/, 7];
-            case 3: return [4 /*yield*/, fs_1.promises.readdir(__dirname + '/imgs')];
+            case 3: return [4 /*yield*/, fs_1.promises.readdir(posix_1.default.join(__dirname, 'imgs'))];
             case 4:
                 if (!!(_a.sent()).includes(filename)) return [3 /*break*/, 5];
                 // TODO: If the filename is not placeholder and is not found in the images file reject the request.
