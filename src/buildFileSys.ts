@@ -20,7 +20,7 @@ async function buildDir(dir: string): Promise<void> {
     if (!(await isDirCreated(dir))) {
       // TODO: If the directory does not exist, create it
       console.log(`Creating ${dir} directory`);
-      await fsPromises.mkdir(path.join(__dirname,dir));
+      await fsPromises.mkdir(path.join(__dirname, dir));
     } else {
       // TODO: If the directory was previouslt created, log a message
       console.log(`${dir} directory already created.`);

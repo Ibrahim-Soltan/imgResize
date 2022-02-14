@@ -32,16 +32,20 @@ const makePlaceholder = async (
         },
       ])
       .jpeg()
-      
+
       .toFile(
-        path.join(__dirname,"placeholderCache",`placeholder-${width}X${height}.png`)
+        path.join(
+          __dirname,
+          'placeholderCache',
+          `placeholder-${width}X${height}.png`
+        )
       );
   } else {
     console.log('The request was previously processed');
   }
   //TODO: Return the filepath of the required place to the middleware to display it.
-  
-  return path.join("placeholderCache",`placeholder-${width}X${height}.png`);
+
+  return path.join('placeholderCache', `placeholder-${width}X${height}.png`);
 };
 
 export { makePlaceholder };

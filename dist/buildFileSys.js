@@ -35,9 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildFileSystem = exports.isDirCreated = exports.buildDir = void 0;
 var fs_1 = require("fs");
+var posix_1 = __importDefault(require("path/posix"));
 // TODO: Check if a directory is created
 function isDirCreated(dir) {
     return __awaiter(this, void 0, void 0, function () {
@@ -73,7 +77,7 @@ function buildDir(dir) {
                     if (!!(_a.sent())) return [3 /*break*/, 3];
                     // TODO: If the directory does not exist, create it
                     console.log("Creating ".concat(dir, " directory"));
-                    return [4 /*yield*/, fs_1.promises.mkdir(__dirname + "\\".concat(dir))];
+                    return [4 /*yield*/, fs_1.promises.mkdir(posix_1.default.join(__dirname, dir))];
                 case 2:
                     _a.sent();
                     return [3 /*break*/, 4];

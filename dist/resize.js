@@ -40,8 +40,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.doResize = void 0;
+var posix_1 = __importDefault(require("path/posix"));
 var sharp_1 = __importDefault(require("sharp"));
 var fileSys_1 = require("./fileSys");
+// Note: the cache directory is created when the server starts ... See listen function in index.ts line 14.
 // TODO: Resize an image
 var doResize = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var data, targetPath, err_1;
@@ -50,12 +52,12 @@ var doResize = function (filename, width, height) { return __awaiter(void 0, voi
             case 0:
                 _a.trys.push([0, 5, , 6]);
                 data = (0, fileSys_1.filenameSplit)(filename);
-                targetPath = "".concat(__dirname, "\\cache\\").concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension);
+                targetPath = posix_1.default.join(__dirname, 'cache', "".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension));
                 return [4 /*yield*/, (0, fileSys_1.previouslyProcessed)(data.filename, width, height, data.extension)];
             case 1:
                 if (!!(_a.sent())) return [3 /*break*/, 3];
                 //TODO: Resize the image and store it in the correct directory(cache), name it image-widthXheight.png to be able to find it later
-                return [4 /*yield*/, (0, sharp_1.default)("".concat(__dirname, "\\imgs\\").concat(filename))
+                return [4 /*yield*/, (0, sharp_1.default)(posix_1.default.join(__dirname, 'imgs', filename))
                         .resize(width, height, { fit: 'fill' })
                         .toFile(targetPath)];
             case 2:
@@ -67,7 +69,7 @@ var doResize = function (filename, width, height) { return __awaiter(void 0, voi
                 _a.label = 4;
             case 4: 
             //TODO: Return the correct filename and filepath to the middle ware to be able to display it
-            return [2 /*return*/, "\\cache\\".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension)];
+            return [2 /*return*/, posix_1.default.join('cache', "".concat(data.filename, "-").concat(width, "X").concat(height, ".").concat(data.extension))];
             case 5:
                 err_1 = _a.sent();
                 console.log(err_1);

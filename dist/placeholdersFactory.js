@@ -40,8 +40,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makePlaceholder = void 0;
+var posix_1 = __importDefault(require("path/posix"));
 var sharp_1 = __importDefault(require("sharp"));
 var fileSys_1 = require("./fileSys");
+// Note: the placeholderCache directory is created when the server starts.
 // TODO: Create a placeholder image
 var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var fontSize, overlay;
@@ -68,7 +70,7 @@ var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0
                         },
                     ])
                         .jpeg()
-                        .toFile("".concat(__dirname, "\\placeholderCache\\placeholder-").concat(width, "X").concat(height, ".png"))];
+                        .toFile(posix_1.default.join(__dirname, 'placeholderCache', "placeholder-".concat(width, "X").concat(height, ".png")))];
             case 2:
                 //TODO: name the file placeholder-widthXheight.png to be able to find it later.
                 _a.sent();
@@ -78,7 +80,7 @@ var makePlaceholder = function (width, height) { return __awaiter(void 0, void 0
                 _a.label = 4;
             case 4: 
             //TODO: Return the filepath of the required place to the middleware to display it.
-            return [2 /*return*/, "\\placeholderCache\\placeholder-".concat(width, "X").concat(height, ".png")];
+            return [2 /*return*/, posix_1.default.join('placeholderCache', "placeholder-".concat(width, "X").concat(height, ".png"))];
         }
     });
 }); };

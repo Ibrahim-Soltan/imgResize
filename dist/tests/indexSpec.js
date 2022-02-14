@@ -55,6 +55,18 @@ describe('test endpoint responses', function () {
             }
         });
     }); });
+    it('should return status 200 when an exsisting image filename is passed', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get('/api/?filename=fjord.jpg&width=200&height=200')];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should return status 404 when the image required is not found', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
@@ -63,6 +75,18 @@ describe('test endpoint responses', function () {
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(404);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('should return status 400 when non-numerical data is sent as width and/or height', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get('/api/?filename=placeholder&width=20a&height=200')];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(400);
                     return [2 /*return*/];
             }
         });

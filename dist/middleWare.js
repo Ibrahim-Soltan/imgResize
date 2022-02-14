@@ -35,50 +35,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var placeholdersFactory_1 = require("./placeholdersFactory");
 var resize_1 = require("./resize");
 var fs_1 = require("fs");
+var posix_1 = __importDefault(require("path/posix"));
 // TODO: Middle Ware that handles the requests
 var midware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, width, height, finalImg;
+    var filename, finalImg, width, height;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 filename = req.query.filename;
-                width = parseInt(req.query.width);
-                height = parseInt(req.query.height);
                 console.log('\n\n');
                 console.log('Request sent:');
-                if (!(filename == 'placeholder')) return [3 /*break*/, 2];
+                if (!(isNaN(req.query.width) ||
+                    isNaN(req.query.height))) return [3 /*break*/, 1];
+                console.log('Invalid width and/or height.');
+                res.status(400);
+                res.send('Invalid width and/or height.');
+                return [3 /*break*/, 7];
+            case 1:
+                width = parseInt(req.query.width);
+                height = parseInt(req.query.height);
+                if (!(filename == 'placeholder')) return [3 /*break*/, 3];
                 console.log("Make placeholder dimensions:".concat(width, "X").concat(height, "."));
                 return [4 /*yield*/, (0, placeholdersFactory_1.makePlaceholder)(width, height)];
-            case 1:
+            case 2:
                 // TODO: make a placeholder image
                 finalImg = _a.sent();
                 // TODO: Display the placeholder to the user
-                res.sendFile(__dirname + finalImg);
+                res.sendFile(posix_1.default.join(__dirname, finalImg));
                 res.status(200);
-                return [3 /*break*/, 6];
-            case 2: return [4 /*yield*/, fs_1.promises.readdir(__dirname + '/imgs')];
-            case 3:
-                if (!!(_a.sent()).includes(filename)) return [3 /*break*/, 4];
+                return [3 /*break*/, 7];
+            case 3: return [4 /*yield*/, fs_1.promises.readdir(__dirname + '/imgs')];
+            case 4:
+                if (!!(_a.sent()).includes(filename)) return [3 /*break*/, 5];
                 // TODO: If the filename is not placeholder and is not found in the images file reject the request.
                 console.log('Request deneid ... The required image is not found.');
                 res.status(404);
                 res.send('The required image is not found');
-                return [3 /*break*/, 6];
-            case 4:
+                return [3 /*break*/, 7];
+            case 5:
                 console.log("Resize ".concat(filename, " to ").concat(width, "X").concat(height, "."));
                 return [4 /*yield*/, (0, resize_1.doResize)(filename, width, height)];
-            case 5:
+            case 6:
                 //TODO: Resize the image.
                 finalImg = _a.sent();
                 //TODO: Display the image.
-                res.sendFile(__dirname + finalImg);
+                res.sendFile(posix_1.default.join(__dirname, finalImg));
                 res.status(200);
-                _a.label = 6;
-            case 6:
+                _a.label = 7;
+            case 7:
                 next();
                 return [2 /*return*/];
         }

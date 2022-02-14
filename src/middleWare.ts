@@ -17,36 +17,39 @@ const midware = async (
   console.log('Request sent:');
   let finalImg: unknown;
   // TODO: Validate that width and height are numbers
-  if(isNaN(req.query.width as unknown as number) || isNaN(req.query.height as unknown as number)){
-    console.log("Invalid width and/or height.");
+  if (
+    isNaN(req.query.width as unknown as number) ||
+    isNaN(req.query.height as unknown as number)
+  ) {
+    console.log('Invalid width and/or height.');
     res.status(400);
-    res.send("Invalid width and/or height.");
-  }
-  else{
+    res.send('Invalid width and/or height.');
+  } else {
     const width = parseInt(req.query.width as string);
     const height = parseInt(req.query.height as string);
-  if (filename == 'placeholder') {
-    console.log(`Make placeholder dimensions:${width}X${height}.`);
-    // TODO: make a placeholder image
-    finalImg = await makePlaceholder(width, height);
-    // TODO: Display the placeholder to the user
-    res.sendFile(path.join(__dirname,finalImg as string));
-    res.status(200);
-  } else if (
-    !(await fsPromises.readdir(__dirname + '/imgs')).includes(filename)
-  ) {
-    // TODO: If the filename is not placeholder and is not found in the images file reject the request.
-    console.log('Request deneid ... The required image is not found.');
-    res.status(404);
-    res.send('The required image is not found');
-  } else {
-    console.log(`Resize ${filename} to ${width}X${height}.`);
-    //TODO: Resize the image.
-    finalImg = await doResize(filename, width, height);
-    //TODO: Display the image.
-    res.sendFile(path.join(__dirname,finalImg as string));
-    res.status(200);
-  }}
+    if (filename == 'placeholder') {
+      console.log(`Make placeholder dimensions:${width}X${height}.`);
+      // TODO: make a placeholder image
+      finalImg = await makePlaceholder(width, height);
+      // TODO: Display the placeholder to the user
+      res.sendFile(path.join(__dirname, finalImg as string));
+      res.status(200);
+    } else if (
+      !(await fsPromises.readdir(__dirname + '/imgs')).includes(filename)
+    ) {
+      // TODO: If the filename is not placeholder and is not found in the images file reject the request.
+      console.log('Request deneid ... The required image is not found.');
+      res.status(404);
+      res.send('The required image is not found');
+    } else {
+      console.log(`Resize ${filename} to ${width}X${height}.`);
+      //TODO: Resize the image.
+      finalImg = await doResize(filename, width, height);
+      //TODO: Display the image.
+      res.sendFile(path.join(__dirname, finalImg as string));
+      res.status(200);
+    }
+  }
   next();
 };
 export default midware;
