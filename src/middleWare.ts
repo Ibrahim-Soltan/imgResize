@@ -11,11 +11,19 @@ const midware = async (
 ) => {
   // TODO: Read the filename, width and height from the request query
   const filename = req.query.filename as string;
-  const width = parseInt(req.query.width as string);
-  const height = parseInt(req.query.height as string);
+
   console.log('\n\n');
   console.log('Request sent:');
   let finalImg: unknown;
+  // TODO: Validate that width and height are numbers
+  if(isNaN(req.query.width as unknown as number) || isNaN(req.query.height as unknown as number)){
+    console.log("Invalid width and/or height.");
+    res.status(400);
+    res.send("Invalid width and/or height.");
+  }
+  else{
+    const width = parseInt(req.query.width as string);
+    const height = parseInt(req.query.height as string);
   if (filename == 'placeholder') {
     console.log(`Make placeholder dimensions:${width}X${height}.`);
     // TODO: make a placeholder image
@@ -37,7 +45,7 @@ const midware = async (
     //TODO: Display the image.
     res.sendFile(__dirname + finalImg);
     res.status(200);
-  }
+  }}
   next();
 };
 export default midware;

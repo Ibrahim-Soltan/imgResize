@@ -1,6 +1,7 @@
 import sharp from 'sharp';
 import { filenameSplit, previouslyProcessed } from './fileSys';
 
+
 // TODO: Resize an image
 const doResize = async (
   filename: string,
