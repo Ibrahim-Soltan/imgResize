@@ -35,9 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.previouslyProcessed = exports.filenameSplit = void 0;
 var fs_1 = require("fs");
+var posix_1 = __importDefault(require("path/posix"));
 // TODO: Split filename seaphoto-200X300.jpg to {filename: "seaphoto", width:200, height: 300, extension:"jpg"}
 function filenameSplit(file) {
     var filenameWidthHeight = file.split('.')[0];
@@ -58,7 +62,8 @@ var previouslyProcessed = function (filename, width, height, extension) { return
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                dir = __dirname + (filename == 'placeholder' ? '\\placeholderCache' : '\\cache');
+                posix_1.default.join(__dirname, filename == 'placeholder' ? 'placeholderCache' : 'cache');
+                dir = posix_1.default.join(__dirname, filename == 'placeholder' ? 'placeholderCache' : 'cache');
                 return [4 /*yield*/, fs_1.promises.readdir(dir)];
             case 1:
                 previouslyProcessedImgs = _a.sent();
