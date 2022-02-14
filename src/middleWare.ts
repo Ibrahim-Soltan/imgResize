@@ -35,7 +35,7 @@ const midware = async (
       res.sendFile(path.join(__dirname, finalImg as string));
       res.status(200);
     } else if (
-      !(await fsPromises.readdir(__dirname + '/imgs')).includes(filename)
+      !(await fsPromises.readdir(path.join(__dirname,"imgs"))).includes(filename)
     ) {
       // TODO: If the filename is not placeholder and is not found in the images file reject the request.
       console.log('Request deneid ... The required image is not found.');
